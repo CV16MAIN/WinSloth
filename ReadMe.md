@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://github.com/user-attachments/assets/03a9bb97-24ec-4fe7-a891-9740f8f5855d" width="200">
+<img src="https://github.com/user-attachments/assets/03a9bb97-24ec-4fe7-a891-9740f8f5855d" width="250">
 
 # WinSloth
 
