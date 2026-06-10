@@ -202,3 +202,135 @@ Found.
 I knew searching existed, but I never really thought about how expensive it becomes when dealing with millions of files. Learning about Binary Search made me realize why data organization matters so much for performance.
 
 I still have a lot to learn before implementing a proper search engine, but understanding these fundamentals feels like a good first step.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+# 10-06-2026
+
+## What I Learned Today
+
+Today I learned more about how file searching works internally.
+
+I created a `FileInfo` structure. A `FileInfo` object stores two important things:
+
+* File name
+* File path
+
+Example:
+
+```cpp
+std::vector<FileInfo> files;
+```
+
+This tells C++:
+
+> "Create a list where every element must be a FileInfo object."
+
+The user can provide a path such as:
+
+```text
+C:\Users\ekans\OneDrive\Desktop\b5
+```
+
+and the program scans that location and collects information about the files inside it.
+
+---
+
+## Problem #1 - Permission Errors
+
+My first major problem appeared when I tried scanning large directories such as the `C:` drive.
+
+I was using `std::filesystem::recursive_directory_iterator`.
+
+The problem is that Windows contains many protected folders that normal applications cannot access. When the iterator reaches one of these folders, Windows blocks access and `std::filesystem` throws a `filesystem_error`.
+
+At first my program would simply crash.
+
+After some research I found a solution:
+
+```cpp
+std::filesystem::directory_options::skip_permission_denied
+```
+
+This tells the iterator:
+
+> "If you find a folder that I cannot access, skip it and continue scanning."
+
+This solved the first issue.
+
+---
+
+## Problem #2 - Strange Windows Files
+
+After fixing the permission problem, another issue appeared.
+
+Windows contains many strange system objects such as:
+
+* Junction Points
+* Symbolic links
+* Deep cache directories
+* Encrypted system files
+
+Some of these can create loops or cause unexpected filesystem errors during a recursive scan.
+
+My original implementation relied heavily on a `for` loop.
+
+The problem was that when an error occurred, the program had very little control over how to recover.
+
+I am now experimenting with a `while` loop and manual iterator handling so I can inspect errors, skip problematic files, and continue scanning instead of immediately failing.
+
+I do not know yet if this will fully solve the issue, but it gives me much more control over the scanning process.
+
+---
+
+## What I Need To Learn Next
+
+While trying to solve these filesystem problems, I realized there are several C++ concepts that I do not fully understand yet.
+
+I need to learn:
+
+* Iterators
+* Dereferencing
+* Iterator incrementing
+* Error handling with filesystem operations
+
+I will spend some time studying these topics before continuing development.
+
+---
+
+## Another Bug - Unicode File Names
+
+I also discovered that not every file name is written in English.
+
+Windows files can contain:
+
+* Hindi characters
+* Japanese characters
+* Chinese characters
+* Special Unicode symbols
+
+I was originally using `std::string`.
+
+This caused problems when reading file names containing non-English characters.
+
+The solution is to use `std::wstring` and wide-character APIs where necessary so that file names can be handled correctly regardless of language.
+
+This was something I had never thought about before.
+
+---
+
+## Thoughts
+
+Today was mostly debugging and research rather than building new features.
+
+Even though it feels slow, I am learning how real software behaves outside of simple tutorial projects. Windows filesystems contain all kinds of edge cases, and handling them correctly is much harder than I expected.
+
+I am still learning C++ while building WinSloth, so mistakes are expected. Every error I fix teaches me something new.
+
+Maybe years from now I will read this developer log again and laugh at these problems, but right now this is where the journey starts.
+
+This is the beginning of WinSloth.
+
+This is the beginning of VoidMain.
