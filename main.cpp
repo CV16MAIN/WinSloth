@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string> 
 #include <vector>
-#include <filesystem>
+#include <filesystem>  
 #include <sstream>
 
 
@@ -9,8 +9,6 @@ struct FileInfo
 {
 	std::wstring filename;  // use w string casue win has many file name in hind and other language
 	std::wstring filepath;
-
-
 };
 
 
@@ -43,10 +41,15 @@ int main() {
 
 
 	}
+	if (file.size() == 0) {
+		std::cerr << "Error(Use Real File Location)";
+	}
+	else {
+		std::cout << "File Size-" << file.size();
+	}
 
-	std::cout << "File Size-" << file.size();
+	
 
-	system("pause");
 
 	return 0;
 
