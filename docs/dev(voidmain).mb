@@ -334,3 +334,35 @@ Maybe years from now I will read this developer log again and laugh at these pro
 This is the beginning of WinSloth.
 
 This is the beginning of VoidMain.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+19-06-2026
+
+Due to food poisoning, I wasn't able to do much coding today. Instead, I spent some time reading LearnCpp and a few books about Elon Musk.
+
+My current goal is to sort the files and then print them. I also ran into an overflow error while working on the project. I'll spend some time investigating it and try to fix it.
+
+I am trying to use sorting, but I realized that sorting is not limited to integers. It also works with strings. For example, if we compare "Ekansh" and "Raja", the letter 'E' comes before 'R' alphabetically, so "Ekansh" will appear first. Similarly, if we compare "demon" and "dog", the first letter is the same ('d'), so the comparison moves to the next letter. Since 'e' comes before 'o', "demon" will come before "dog".
+
+The "In-Place" Sorting Secret
+
+When you run std::sort, it does not create a new vector, and you do not need another variable to store the result. C++ sorts the vector in place.
+
+Think of the file vector as a bookshelf and the FileInfo structs as books.
+
+Right now, the scout has placed all the books on the shelf in a random order.
+
+When you call std::sort, C++ acts like a librarian.
+
+The librarian does not buy a new bookshelf. Instead, they follow the sorting rules, take the books off the shelf, rearrange them, and place them back in the correct order on the same shelf.
+
+As soon as the line:
+
+std::sort(file.begin(), file.end(), sortFile);
+
+finishes executing, the original file vector is permanently reordered. For example, before sorting, file[0] might contain "zebra.txt". After sorting, file[0] could contain "apple.txt".
+
+Task completed for today.
+

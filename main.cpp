@@ -3,6 +3,7 @@
 #include <vector>
 #include <filesystem>  
 #include <sstream>
+#include <algorithm> 
 
 
 #define RESET  "\033[0m"
@@ -20,7 +21,10 @@ struct FileInfo
 	std::wstring filepath;
 };
 
-
+bool sortFile(const FileInfo& file1 , const FileInfo& file2 ) {
+	// file1 and 2 for comp
+	return file1.filename < file2.filename; // if yes then true 
+}
 
 
 int main() {
@@ -37,16 +41,16 @@ int main() {
 
 	while (start != end) {
 		// ! if no error find  
-		if (!errorbyfilesystem) {
+		if (!errorbyfilesystem) { 
 
 			FileInfo tempFile;
 			tempFile.filename = start->path().filename().wstring();
 			tempFile.filepath = start->path().wstring();
-			file.push_back(tempFile); // 
+			file.push_back(tempFile); 
 
 
 		}
-		start.increment(errorbyfilesystem);
+		start.increment(errorbyfilesystem); // !just move to the next file if error if no error then it will act Normal 
 
 
 	}
@@ -55,11 +59,14 @@ int main() {
 	}
 	else {
 		std::cout << "File Size-" << file.size() << "\n";
-		for (int i = 0; i <= file.size() - 1; i++) { //  
-			std::wcout << GREEN << "FileName- " << file[i].filename << " " << "FilePath -" << file[i].filepath << RESET << '\n';
+		std::sort(file.begin() , file.end() , sortFile);  // ! begin and end a methold that give an object ittrator that point at the begin  and end 
+		//! and this sort work in the file vector no need to make new var ect 
+		for (size_t i = 0; i < file.size(); i++) {  
+			std::wcout << GREEN <<file[i].filename << WHITE << '\n';
 		}
+	
 	}
-	// std::getline(std::cin, fileinfo.filename);
+	
 
 
 
