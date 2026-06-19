@@ -62,14 +62,28 @@ int main() {
 		std::sort(file.begin() , file.end() , sortFile);  // ! begin and end a methold that give an object ittrator that point at the begin  and end 
 		//! and this sort work in the file vector no need to make new var ect 
 		for (size_t i = 0; i < file.size(); i++) {  
-			std::wcout << GREEN <<file[i].filename << WHITE << '\n';
+			std::wcout << GREEN <<"["<< file[i].filename << "]" WHITE << '\n';
 		}
+		std::cout << "----------------------------------------------------------------------\n";
+		std::wstring userGiveFileName{};
+		std::wcout << RED << "Enter File Name-" << WHITE;
+		// !Use getline so it captures spaces! (std::ws clears any leftover invisible 'Enters')
+		std::getline(std::wcin >> std::ws, userGiveFileName);
+		for (size_t i = 0; i < file.size(); i++) {
+			if (file[i].filename == userGiveFileName) {
+				std::wcout << "found the file"<<'\n';
+				std::wcout << RED << "File Location:" << file[i].filepath << '\n';
+
+			}
+
+		}
+		
 	
 	}
 	
 
 
-
+	system("pause");
 	return 0;
 
 }
